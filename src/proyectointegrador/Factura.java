@@ -5,16 +5,17 @@
 package proyectointegrador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.xwpf.usermodel.*;
+import org.apache.poi.util.Units;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 /**
  * Clase Factura que extiende de Venta.
  *
@@ -60,81 +61,98 @@ public class Factura extends Comprobante {
     @Override
     public String generarPDF() {
         try {
-            String carpeta = "D:/Documentos/Netbeans/Proyectos/ProyectoIntegrador/FacPDF";
-            
-            String nombreArchivo = "Factura_" + System.currentTimeMillis() + ".pdf";
+            String carpeta = "D:/Documentos/Netbeans/Proyectos/ProyectoIntegrador/FacturasWord";
+            Files.createDirectories(Paths.get(carpeta));
+
+            String nombreArchivo = "Factura_" + System.currentTimeMillis() + ".docx";
             String ruta = carpeta + "/" + nombreArchivo;
 
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(ruta));
-            document.open();
+            XWPFDocument document = new XWPFDocument();
+            FileOutputStream out = new FileOutputStream(ruta);
 
-           
+            // LOGO (si existe)
             int idEmpresaSeleccionada = empresa.getIdempresa();
             String logoPath = Empresa.getLogoPathPorEmpresaId(idEmpresaSeleccionada);
             try {
-                Image logo = Image.getInstance(logoPath);
-                logo.scaleToFit(100, 100);
-                logo.setAlignment(Image.ALIGN_LEFT);
-                document.add(logo);
+                InputStream pic = new FileInputStream(logoPath);
+                XWPFParagraph logoParagraph = document.createParagraph();
+                logoParagraph.setAlignment(ParagraphAlignment.LEFT);
+                XWPFRun logoRun = logoParagraph.createRun();
+                logoRun.addPicture(pic, XWPFDocument.PICTURE_TYPE_PNG, logoPath, Units.toEMU(100), Units.toEMU(100));
+                pic.close();
             } catch (Exception e) {
                 System.out.println("No se encontró el logo en la ruta: " + logoPath);
             }
 
-            
-            Paragraph datosEmpresa = new Paragraph(
-                empresa.getNombreEmpresa() + "\n" +
-                "RUC: " + empresa.getRUC() + "\n" +
-                "Dirección: " + empresa.getDireccion() + "\n" +
-                "Teléfono: " + empresa.getTelefono() + "\n" +
-                "Correo: " + empresa.getCorreo()
-            );
-            datosEmpresa.setAlignment(Element.ALIGN_LEFT);
-            document.add(datosEmpresa);
+            // Datos de la empresa
+            XWPFParagraph datosEmpresa = document.createParagraph();
+            XWPFRun runEmpresa = datosEmpresa.createRun();
+            runEmpresa.setText(empresa.getNombreEmpresa());
+            runEmpresa.addBreak();
+            runEmpresa.setText("RUC: " + empresa.getRUC());
+            runEmpresa.addBreak();
+            runEmpresa.setText("Dirección: " + empresa.getDireccion());
+            runEmpresa.addBreak();
+            runEmpresa.setText("Teléfono: " + empresa.getTelefono());
+            runEmpresa.addBreak();
+            runEmpresa.setText("Correo: " + empresa.getCorreo());
 
-            document.add(new Paragraph(" "));
+            document.createParagraph(); // espacio
 
-            
-            document.add(new Paragraph("RUC Cliente: " + ruc));
-            document.add(new Paragraph("Razón Social: " + razonSocial));
-            document.add(new Paragraph("Correo: " + correo));
-            document.add(new Paragraph(" "));
+            // Cliente
+            XWPFParagraph clienteP = document.createParagraph();
+            XWPFRun clienteRun = clienteP.createRun();
+            clienteRun.setText("RUC Cliente: " + ruc);
+            clienteRun.addBreak();
+            clienteRun.setText("Razón Social: " + razonSocial);
+            clienteRun.addBreak();
+            clienteRun.setText("Correo: " + correo);
 
-            
-            PdfPTable tabla = new PdfPTable(3);
-            tabla.addCell("Nombre");
-            tabla.addCell("Cantidad");
-            tabla.addCell("Subtotal");
+            document.createParagraph(); // espacio
+
+            // Tabla de productos
+            XWPFTable tabla = document.createTable();
+            XWPFTableRow header = tabla.getRow(0);
+            header.getCell(0).setText("Nombre");
+            header.addNewTableCell().setText("Cantidad");
+            header.addNewTableCell().setText("Subtotal");
 
             for (int i = 0; i < modelo.getRowCount(); i++) {
-                tabla.addCell(modelo.getValueAt(i, 0).toString());
-                tabla.addCell(modelo.getValueAt(i, 1).toString());
-                tabla.addCell(modelo.getValueAt(i, 2).toString());
+                XWPFTableRow fila = tabla.createRow();
+                fila.getCell(0).setText(modelo.getValueAt(i, 0).toString());
+                fila.getCell(1).setText(modelo.getValueAt(i, 1).toString());
+                fila.getCell(2).setText(modelo.getValueAt(i, 2).toString());
             }
 
-            document.add(tabla);
-            
-            
-            Paragraph descuentop = new Paragraph("Descuento: " + descuento + " %");
-            descuentop.setAlignment(Element.ALIGN_RIGHT);
-            document.add(descuentop);
+            document.createParagraph(); // espacio
 
-            
-            Paragraph totalP = new Paragraph("Total: S/ " + total);
-            totalP.setAlignment(Element.ALIGN_RIGHT);
-            document.add(totalP);
+            // Descuento
+            XWPFParagraph descP = document.createParagraph();
+            descP.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun descRun = descP.createRun();
+            descRun.setText("Descuento: " + descuento + " %");
 
+            // Total
+            XWPFParagraph totalP = document.createParagraph();
+            totalP.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun totalRun = totalP.createRun();
+            totalRun.setText("Total: S/ " + total);
+
+            // Guardar documento
+            document.write(out);
+            out.close();
             document.close();
-            System.out.println("PDF generado en: " + ruta);
-            JOptionPane.showMessageDialog(null, "Factura PDF generada correctamente.");
+
+            System.out.println("Word generado en: " + ruta);
+            JOptionPane.showMessageDialog(null, "Factura Word generada correctamente.");
 
             return nombreArchivo;
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error al generar la Factura.");
-                return null;
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al generar la factura.");
+            return null;
+        }
     }
 
     @Override

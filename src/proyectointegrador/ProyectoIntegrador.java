@@ -31,6 +31,7 @@ public class ProyectoIntegrador {
     public static void main(String[] args) {  
         // PRUEBA DE CONEXION CON LA BD
         System.out.println("🔍 Iniciando prueba de conexión...");
+        System.out.println(org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream.class.getProtectionDomain().getCodeSource().getLocation());
 
         try {
             // Intenta cargar el driver manualmente (por si el IDE no lo hace)
