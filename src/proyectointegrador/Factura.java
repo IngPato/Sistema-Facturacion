@@ -16,6 +16,9 @@ import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 /**
  * Clase Factura que extiende de Venta.
  *
@@ -61,8 +64,15 @@ public class Factura extends Comprobante {
     @Override
     public String generarPDF() {
         try {
+            // Validar campos
+            Validate.notBlank(ruc, "El RUC del cliente no puede estar vacío.");
+            Validate.notBlank(razonSocial, "La razón social no puede estar vacía.");
+            Validate.notBlank(correo, "El correo del cliente no puede estar vacío.");
+
+            // Crear carpeta si no existe Apache Commons IO
             String carpeta = "D:/Documentos/Netbeans/Proyectos/ProyectoIntegrador/FacturasWord";
-            Files.createDirectories(Paths.get(carpeta));
+            File directorio = new File(carpeta);
+            FileUtils.forceMkdir(directorio);  // Crea la carpeta y subcarpetas si no existen
 
             String nombreArchivo = "Factura_" + System.currentTimeMillis() + ".docx";
             String ruta = carpeta + "/" + nombreArchivo;
@@ -73,13 +83,11 @@ public class Factura extends Comprobante {
             // LOGO (si existe)
             int idEmpresaSeleccionada = empresa.getIdempresa();
             String logoPath = Empresa.getLogoPathPorEmpresaId(idEmpresaSeleccionada);
-            try {
-                InputStream pic = new FileInputStream(logoPath);
+            try (InputStream pic = new FileInputStream(logoPath)) {
                 XWPFParagraph logoParagraph = document.createParagraph();
                 logoParagraph.setAlignment(ParagraphAlignment.LEFT);
                 XWPFRun logoRun = logoParagraph.createRun();
                 logoRun.addPicture(pic, XWPFDocument.PICTURE_TYPE_PNG, logoPath, Units.toEMU(100), Units.toEMU(100));
-                pic.close();
             } catch (Exception e) {
                 System.out.println("No se encontró el logo en la ruta: " + logoPath);
             }
@@ -130,7 +138,7 @@ public class Factura extends Comprobante {
             XWPFParagraph descP = document.createParagraph();
             descP.setAlignment(ParagraphAlignment.RIGHT);
             XWPFRun descRun = descP.createRun();
-            descRun.setText("Descuento: " + descuento + " %");
+            descRun.setText("Descuento: " + " S/." + descuento);
 
             // Total
             XWPFParagraph totalP = document.createParagraph();
@@ -148,6 +156,9 @@ public class Factura extends Comprobante {
 
             return nombreArchivo;
 
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error al generar la factura.");

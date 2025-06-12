@@ -18,6 +18,7 @@ import proyectointegrador.BaseDatos;
 import proyectointegrador.Carrito;
 import javax.swing.table.DefaultTableModel;
 import Adicionales.PlaceHolder;
+import com.google.common.base.Preconditions;
 
 /**
  * Esta clase representa la interfaz gráfica para la vista de boletas en el
@@ -364,72 +365,76 @@ public class VistaBoleta extends javax.swing.JFrame {
 
     private void BotonGenBolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGenBolActionPerformed
         // TODO add your handling code here:
-        String dni = BolDni.getText();
-        String nombre = BolNombre.getText();
-        Date fechaSeleccionada = jdFecha_actual.getDate();
+        try {
+            String dni = BolDni.getText().trim();
+            String nombre = BolNombre.getText().trim();
+            Date fechaSeleccionada = jdFecha_actual.getDate();
 
-        if (dni.isEmpty() || nombre.isEmpty() || fechaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "Complete todos los campos.");
-            return;
-        }
+            // Validaciones de campos
+            Preconditions.checkArgument(!dni.isEmpty(), "Ingrese el DNI.");
+            Preconditions.checkArgument(!nombre.isEmpty(), "Ingrese el nombre.");
+            Preconditions.checkNotNull(fechaSeleccionada, "Seleccione una fecha.");
 
-        Empresa empresaSeleccionada = (Empresa) BolEmpresa.getSelectedItem();
-        if (empresaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione una empresa.");
-            return;
-        }
-        int idEmpresa = empresaSeleccionada.getIdempresa();
+            Empresa empresaSeleccionada = (Empresa) BolEmpresa.getSelectedItem();
+            Preconditions.checkNotNull(empresaSeleccionada, "Seleccione una empresa.");
 
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-        String fecha = formatoFecha.format(fechaSeleccionada);
-        String hora = formatoHora.format(fechaSeleccionada);
+            int idEmpresa = empresaSeleccionada.getIdempresa();
 
-        int idTrabajador = Login.usuarioActual.getId();
-        Boleta boleta = new Boleta(dni, nombre, Venta.getVentaActual());
-      
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+            String fecha = formatoFecha.format(fechaSeleccionada);
+            String hora = formatoHora.format(fechaSeleccionada);
 
-        // Tabla para PDF
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Cantidad");
-        modelo.addColumn("Subtotal");
+            int idTrabajador = Login.usuarioActual.getId();
 
-        for (Producto producto : Carrito.getInstancia().getProductos()) {
-            String nombreProd = producto.getNombre();
-            int cantidad = producto.getStock();
-            double subtotal = producto.getPrecio() * cantidad;
+            // Validar carrito
+            Carrito carrito = Carrito.getInstancia();
+            Preconditions.checkArgument(!carrito.getProductos().isEmpty(), "El carrito está vacío.");
 
-            modelo.addRow(new Object[]{nombreProd, cantidad, subtotal});
-        }
+            // Preparar tabla para PDF
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Cantidad");
+            modelo.addColumn("Subtotal");
 
-        String total = BolTotal.getText();
-        String descuento = BolDescuento.getText();
-        
-        BaseDatos bd = new BaseDatos();
-        Venta venta = Venta.getVentaActual();
-        Boleta boletapdf = new Boleta(empresaSeleccionada, dni, nombre, total, descuento, modelo);
-        boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa);
-
-        if (exito) {
-            // Generar PDF y obtener el nombre del archivo
-            String codigoBoleta = boletapdf.generarPDF();
-
-            if (codigoBoleta == null) {
-                JOptionPane.showMessageDialog(this, "No se pudo generar la boleta PDF.");
-                return;
+            for (Producto producto : carrito.getProductos()) {
+                String nombreProd = producto.getNombre();
+                int cantidad = producto.getStock();
+                double subtotal = producto.getPrecio() * cantidad;
+                modelo.addRow(new Object[]{nombreProd, cantidad, subtotal});
             }
 
-            // Registrar boleta con el código correcto
-            int idVenta = Venta.getVentaActual().getIdVenta();
-            Boleta boletabd = new Boleta(bd, dni, nombre, codigoBoleta);
-            boletabd.registrarComprobanteEnBD(bd, idVenta);
+            String total = BolTotal.getText().trim();
+            String descuento = BolDescuento.getText().trim();
+            Preconditions.checkArgument(!total.isEmpty(), "El total no puede estar vacío.");
+            Preconditions.checkArgument(!descuento.isEmpty(), "El descuento no puede estar vacío.");
 
-            JOptionPane.showMessageDialog(this, "Venta registrada correctamente.");
-            Carrito.getInstancia().limpiarCarrito();
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al registrar la venta.");
+            // Registrar venta
+            BaseDatos bd = new BaseDatos();
+            Venta venta = Venta.getVentaActual();
+            Boleta boletapdf = new Boleta(empresaSeleccionada, dni, nombre, total, descuento, modelo);
+
+            boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa);
+
+            if (exito) {
+                String codigoBoleta = boletapdf.generarPDF();
+                Preconditions.checkNotNull(codigoBoleta, "No se pudo generar el archivo de boleta PDF.");
+
+                int idVenta = venta.getIdVenta();
+                Boleta boletabd = new Boleta(bd, dni, nombre, codigoBoleta);
+                boletabd.registrarComprobanteEnBD(bd, idVenta);
+
+                JOptionPane.showMessageDialog(this, "Venta registrada correctamente.");
+                carrito.limpiarCarrito();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al registrar la venta.");
+            }
+
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_BotonGenBolActionPerformed
 

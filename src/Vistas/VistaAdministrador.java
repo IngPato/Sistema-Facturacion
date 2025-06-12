@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import proyectointegrador.Producto;
 import Adicionales.PlaceHolder;
 import proyectointegrador.Administrador;
+import com.google.common.base.Preconditions;
 
 /**
  * VistaAdministrador es una clase que representa una interfaz gráfica para la
@@ -298,13 +299,31 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         try {
             // Obtener los datos del producto de la tabla y los campos de texto
-
             int id = (int) TablaAdmin.getValueAt(fila, 0);
             String nombre = AdminNombre.getText();
             String categoria = AdminCategorias.getText();
-            double precio = Double.parseDouble(AdminPrecio.getText());
-            int cantidad = Integer.parseInt(AdminCantidad.getText());
+            String precioTexto = AdminPrecio.getText();
+            String cantidadTexto = AdminCantidad.getText();
             String codigo = AdminCodigo.getText();
+
+            // Precondiciones para validar entradas
+            Preconditions.checkNotNull(nombre, "El nombre no puede ser nulo.");
+            Preconditions.checkArgument(!nombre.trim().isEmpty(), "El nombre no puede estar vacío.");
+
+            Preconditions.checkNotNull(categoria, "La categoría no puede ser nula.");
+            Preconditions.checkArgument(!categoria.trim().isEmpty(), "La categoría no puede estar vacía.");
+
+            Preconditions.checkNotNull(precioTexto, "El precio no puede ser nulo.");
+            Preconditions.checkArgument(!precioTexto.trim().isEmpty(), "El precio no puede estar vacío.");
+
+            Preconditions.checkNotNull(cantidadTexto, "La cantidad no puede ser nula.");
+            Preconditions.checkArgument(!cantidadTexto.trim().isEmpty(), "La cantidad no puede estar vacía.");
+
+            Preconditions.checkNotNull(codigo, "El código no puede ser nulo.");
+            Preconditions.checkArgument(!codigo.trim().isEmpty(), "El código no puede estar vacío.");
+
+            double precio = Double.parseDouble(precioTexto);
+            int cantidad = Integer.parseInt(cantidadTexto);
 
             // Crear un objeto Producto con los datos obtenidos
             Producto p = new Producto(id, nombre, categoria, precio, cantidad, codigo);
@@ -317,12 +336,15 @@ public class VistaAdministrador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Producto editado correctamente.");
                 cargarProductosEnTabla();
             } else {
-                // Si no se pudo editar el producto, mostrar mensaje de error
+                // Si no se pudo editar el producto, mostrar mensaje de error    
                 JOptionPane.showMessageDialog(null, "No se pudo editar el producto.");
             }
+
         } catch (NumberFormatException e) {
             // Si ocurre un error al convertir el precio o la cantidad, mostrar mensaje de error
             JOptionPane.showMessageDialog(null, "Precio o cantidad inválidos.");
+        } catch (IllegalArgumentException | NullPointerException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
     }//GEN-LAST:event_BotonEditarAActionPerformed
@@ -339,10 +361,29 @@ public class VistaAdministrador extends javax.swing.JFrame {
         String nombre = AdminNombre.getText();
         String categoria = AdminCategorias.getText();
         String codigo = AdminCodigo.getText();
+        String precioTexto = AdminPrecio.getText();
+        String cantidadTexto = AdminCantidad.getText();
 
         try {
-            double precio = Double.parseDouble(AdminPrecio.getText());
-            int cantidad = Integer.parseInt(AdminCantidad.getText());
+            // Validar precondiciones
+            Preconditions.checkNotNull(nombre, "El nombre no puede ser nulo.");
+            Preconditions.checkArgument(!nombre.trim().isEmpty(), "El nombre no puede estar vacío.");
+
+            Preconditions.checkNotNull(categoria, "La categoría no puede ser nula.");
+            Preconditions.checkArgument(!categoria.trim().isEmpty(), "La categoría no puede estar vacía.");
+
+            Preconditions.checkNotNull(codigo, "El código no puede ser nulo.");
+            Preconditions.checkArgument(!codigo.trim().isEmpty(), "El código no puede estar vacío.");
+
+            Preconditions.checkNotNull(precioTexto, "El precio no puede ser nulo.");
+            Preconditions.checkArgument(!precioTexto.trim().isEmpty(), "El precio no puede estar vacío.");
+
+            Preconditions.checkNotNull(cantidadTexto, "La cantidad no puede ser nula.");
+            Preconditions.checkArgument(!cantidadTexto.trim().isEmpty(), "La cantidad no puede estar vacía.");
+
+            // Convertir y validar valores numéricos
+            double precio = Double.parseDouble(precioTexto);
+            int cantidad = Integer.parseInt(cantidadTexto);
 
             Producto p = new Producto(0, nombre, categoria, precio, cantidad, codigo);
             Administrador admin = new Administrador();
@@ -355,8 +396,9 @@ public class VistaAdministrador extends javax.swing.JFrame {
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Precio o cantidad no válidos.");
+        } catch (IllegalArgumentException | NullPointerException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
     }//GEN-LAST:event_BotonAgregarAActionPerformed
 
     private void AdminCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminCategoriasActionPerformed
@@ -376,16 +418,30 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private void BotonBuscarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarAActionPerformed
         // TODO add your handling code here:
         String valor = AdminBuscar.getText().trim();
-        DefaultTableModel modelo = (DefaultTableModel) TablaAdmin.getModel();
-        modelo.setRowCount(0);
 
-        Administrador admin = new Administrador();
-        List<Producto> lista = admin.buscarProducto(valor);
+        try {
+            // Validar que el valor de búsqueda no esté vacío o nulo
+            Preconditions.checkNotNull(valor, "El campo de búsqueda no puede ser nulo.");
+            Preconditions.checkArgument(!valor.isEmpty(), "Ingrese un valor para buscar.");
 
-        for (Producto p : lista) {
-            modelo.addRow(new Object[]{
-                p.getId(), p.getNombre(), p.getCategoria(), p.getPrecio(), p.getStock(), p.getCodigo()
-            });
+            DefaultTableModel modelo = (DefaultTableModel) TablaAdmin.getModel();
+            modelo.setRowCount(0);
+
+            Administrador admin = new Administrador();
+            List<Producto> lista = admin.buscarProducto(valor);
+
+            for (Producto p : lista) {
+                modelo.addRow(new Object[]{
+                    p.getId(), p.getNombre(), p.getCategoria(), p.getPrecio(), p.getStock(), p.getCodigo()
+                });
+            }
+
+            // Si no se encuentra ningún producto
+            if (lista.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No se encontraron productos con ese criterio.");
+            }
+        } catch (IllegalArgumentException | NullPointerException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_BotonBuscarAActionPerformed
 
@@ -445,20 +501,23 @@ public class VistaAdministrador extends javax.swing.JFrame {
      */
     private void BotonEliminarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonEliminarAActionPerformed
         // TODO add your handling code here:
-        int fila = TablaAdmin.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(null, "Seleccione un producto para eliminar.");
-            return;
-        }
+        try {
+            int fila = TablaAdmin.getSelectedRow();
 
-        int id = (int) TablaAdmin.getValueAt(fila, 0);
-        Administrador admin = new Administrador();
+            // Validar que se haya seleccionado una fila
+            Preconditions.checkArgument(fila != -1, "Seleccione un producto para eliminar.");
 
-        if (admin.eliminarProducto(id)) {
-            JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
-            cargarProductosEnTabla();
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto.");
+            int id = (int) TablaAdmin.getValueAt(fila, 0);
+            Administrador admin = new Administrador();
+
+            if (admin.eliminarProducto(id)) {
+                JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+                cargarProductosEnTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto.");
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_BotonEliminarAActionPerformed
 

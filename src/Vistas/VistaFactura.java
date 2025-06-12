@@ -18,6 +18,7 @@ import proyectointegrador.Empresa;
 import proyectointegrador.Venta;
 import proyectointegrador.Factura;
 import proyectointegrador.Producto;
+import com.google.common.base.Preconditions;
 /**
  *
  * @author GPatr
@@ -396,72 +397,78 @@ public class VistaFactura extends javax.swing.JFrame {
 
     private void BotonGenFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGenFacActionPerformed
         // TODO add your handling code here:
-        String ruc = FacRuc.getText();
-        String nombre = FacNombre.getText();
-        Date fechaSeleccionada = jdFecha_actual.getDate();
-        String correo = FacCorreo.getText();
+        try {
+            String ruc = FacRuc.getText().trim();
+            String nombre = FacNombre.getText().trim();
+            String correo = FacCorreo.getText().trim();
+            Date fechaSeleccionada = jdFecha_actual.getDate();
 
-        if (ruc.isEmpty() || nombre.isEmpty() || fechaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "Complete todos los campos.");
-            return;
-        }
+            // Validaciones básicas
+            Preconditions.checkArgument(!ruc.isEmpty(), "Ingrese el RUC.");
+            Preconditions.checkArgument(!nombre.isEmpty(), "Ingrese el nombre.");
+            Preconditions.checkArgument(!correo.isEmpty(), "Ingrese el correo.");
+            Preconditions.checkNotNull(fechaSeleccionada, "Seleccione una fecha.");
 
-        Empresa empresaSeleccionada = (Empresa) FacEmpresa.getSelectedItem();
-        if (empresaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "Seleccione una empresa.");
-            return;
-        }
-        int idEmpresa = empresaSeleccionada.getIdempresa();
+            Empresa empresaSeleccionada = (Empresa) FacEmpresa.getSelectedItem();
+            Preconditions.checkNotNull(empresaSeleccionada, "Seleccione una empresa.");
 
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-        String fecha = formatoFecha.format(fechaSeleccionada);
-        String hora = formatoHora.format(fechaSeleccionada);
+            int idEmpresa = empresaSeleccionada.getIdempresa();
 
-        int idTrabajador = Login.usuarioActual.getId();
-        Factura factura = new Factura(ruc, nombre,correo, Venta.getVentaActual());
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+            String fecha = formatoFecha.format(fechaSeleccionada);
+            String hora = formatoHora.format(fechaSeleccionada);
 
-        
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Nombre");
-        modelo.addColumn("Cantidad");
-        modelo.addColumn("Subtotal");
+            int idTrabajador = Login.usuarioActual.getId();
 
-        for (Producto producto : Carrito.getInstancia().getProductos()) {
-            String nombreProd = producto.getNombre();
-            int cantidad = producto.getStock(); 
-            double subtotal = producto.getPrecio() * cantidad;
+            // Validar carrito
+            Carrito carrito = Carrito.getInstancia();
+            Preconditions.checkArgument(!carrito.getProductos().isEmpty(), "El carrito está vacío.");
 
-            modelo.addRow(new Object[]{nombreProd, cantidad, subtotal});
-        }
+            // Construir tabla para el PDF
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Cantidad");
+            modelo.addColumn("Subtotal");
 
-        String total = FacTotal.getText();
-        String descuento = FacDescuento.getText();
+            for (Producto producto : carrito.getProductos()) {
+                String nombreProd = producto.getNombre();
+                int cantidad = producto.getStock();
+                double subtotal = producto.getPrecio() * cantidad;
+                modelo.addRow(new Object[]{nombreProd, cantidad, subtotal});
+            }
 
-        Venta venta = Venta.getVentaActual();
-        Factura facturapdf = new Factura(empresaSeleccionada, ruc, nombre , correo, total, descuento, modelo);
-        BaseDatos bd = new BaseDatos();
-        boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa);
-        
-        if (exito) {
-            
-            String codigoFactura = facturapdf.generarPDF();
+            String total = FacTotal.getText().trim();
+            String descuento = FacDescuento.getText().trim();
+            Preconditions.checkArgument(!total.isEmpty(), "El total no puede estar vacío.");
+            Preconditions.checkArgument(!descuento.isEmpty(), "El descuento no puede estar vacío.");
 
-                if (codigoFactura == null) {
-                    JOptionPane.showMessageDialog(this, "No se pudo generar la boleta PDF.");
-                    return;
-                }
+            // Registrar venta
+            Venta venta = Venta.getVentaActual();
+            BaseDatos bd = new BaseDatos();
 
-                // Registrar boleta con el código correcto
-                int idVenta = Venta.getVentaActual().getIdVenta();
-                Factura facturabd = new Factura(bd, ruc, nombre,correo, codigoFactura);
+            Factura facturapdf = new Factura(empresaSeleccionada, ruc, nombre, correo, total, descuento, modelo);
+            boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa);
+
+            if (exito) {
+                String codigoFactura = facturapdf.generarPDF();
+                Preconditions.checkNotNull(codigoFactura, "No se pudo generar el archivo de factura PDF.");
+
+                int idVenta = venta.getIdVenta();
+                Factura facturabd = new Factura(bd, ruc, nombre, correo, codigoFactura);
                 facturabd.registrarComprobanteEnBD(bd, idVenta);
 
                 JOptionPane.showMessageDialog(this, "Venta registrada correctamente.");
-                Carrito.getInstancia().limpiarCarrito();
+                carrito.limpiarCarrito();
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al registrar la venta.");
+            }
+
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error inesperado: " + e.getMessage());
         }
     }//GEN-LAST:event_BotonGenFacActionPerformed
 

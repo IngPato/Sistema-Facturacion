@@ -16,8 +16,7 @@ import proyectointegrador.Trabajador;
 import proyectointegrador.Carrito;
 import proyectointegrador.BaseDatos;
 import proyectointegrador.Venta;
-import proyectointegrador.Boleta;
-import proyectointegrador.Factura;
+import com.google.common.base.Preconditions;
 
 /**
  * Esta clase representa la interfaz gráfica para la vista del trabajador en el
@@ -482,17 +481,26 @@ public class VistaTrabajador extends javax.swing.JFrame {
      */
     private void BuscarTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarTraActionPerformed
         // TODO add your handling code here:
-        String valor = TraNombre.getText().trim();
-        DefaultTableModel modelo = (DefaultTableModel) TablaTraSel.getModel();
-        modelo.setRowCount(0);
+        try {
+            String valor = TraNombre.getText().trim();
 
-        Trabajador tra = new Trabajador();
-        List<Producto> lista = tra.buscarProducto(valor);
+            // Precondición: el valor de búsqueda no debe estar vacío
+            Preconditions.checkArgument(!valor.isEmpty(), "Ingrese un valor para buscar.");
 
-        for (Producto p : lista) {
-            modelo.addRow(new Object[]{
-                p.getId(), p.getNombre(), p.getCategoria(), p.getPrecio(), p.getStock(), p.getCodigo()
-            });
+            DefaultTableModel modelo = (DefaultTableModel) TablaTraSel.getModel();
+            modelo.setRowCount(0);
+
+            Trabajador tra = new Trabajador();
+            List<Producto> lista = tra.buscarProducto(valor);
+
+            for (Producto p : lista) {
+                modelo.addRow(new Object[]{
+                    p.getId(), p.getNombre(), p.getCategoria(), p.getPrecio(), p.getStock(), p.getCodigo()
+                });
+            }
+
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }//GEN-LAST:event_BuscarTraActionPerformed
 
@@ -543,25 +551,34 @@ public class VistaTrabajador extends javax.swing.JFrame {
     private void BotonAñadirTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonAñadirTActionPerformed
         // TODO add your handling code here:
         // Obtener el nombre del producto y la cantidad
-
-        String nombre = TraNombre.getText();
+        String nombre = TraNombre.getText().trim();
         int cantidad;
+
+        // Validación con Preconditions
+        try {
+            Preconditions.checkArgument(!nombre.isEmpty(), "Ingrese el nombre del producto.");
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return;
+        }
 
         try {
             cantidad = Integer.parseInt(TraCantidad.getText());
+            Preconditions.checkArgument(cantidad > 0, "La cantidad debe ser mayor que cero.");
         } catch (NumberFormatException e) {
-            // Si la cantidad es inválida, mostrar un mensaje de error
-
-            JOptionPane.showMessageDialog(null, "Cantidad inválida");
+            JOptionPane.showMessageDialog(null, "Cantidad inválida.");
+            return;
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
             return;
         }
+
         // Crear una nueva instancia de la base de datos y el carrito
         BaseDatos bd = new BaseDatos();
         Carrito carrito = Carrito.getInstancia();
+
         // Buscar el producto por nombre
-
         Producto producto = Producto.buscarProductoPorNombre(nombre, bd);
-
         if (producto == null) {
             JOptionPane.showMessageDialog(null, "Producto no encontrado.");
             return;
@@ -573,8 +590,15 @@ public class VistaTrabajador extends javax.swing.JFrame {
             return;
         }
 
-        // Agregar al carrito (sin tocar base de datos)
-        Producto nuevo = new Producto(producto.getId(), producto.getNombre(), producto.getCategoria(), producto.getPrecio(), cantidad, producto.getCodigo());
+        // Agregar al carrito
+        Producto nuevo = new Producto(
+            producto.getId(),
+            producto.getNombre(),
+            producto.getCategoria(),
+            producto.getPrecio(),
+            cantidad,
+            producto.getCodigo()
+        );
 
         carrito.getProductos().add(nuevo);
 
@@ -618,28 +642,88 @@ public class VistaTrabajador extends javax.swing.JFrame {
 
     private void BotonGeneBolTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGeneBolTActionPerformed
         // TODO add your handling code here:
+        try {
+            // Validar campos no vacíos
+            String descuentoStr = TraDescuento.getText().trim();
+            String cancelaStr = TraCancela.getText().trim();
+            Preconditions.checkArgument(!descuentoStr.isEmpty(), "Ingrese el descuento.");
+            Preconditions.checkArgument(!cancelaStr.isEmpty(), "Ingrese el monto cancelado.");
+
+            // Parsear y validar valores numéricos
+            double descuento = Double.parseDouble(descuentoStr);
+            double cancelado = Double.parseDouble(cancelaStr);
+            Preconditions.checkArgument(descuento >= 0, "El descuento no puede ser negativo.");
+            Preconditions.checkArgument(cancelado >= 0, "El monto cancelado no puede ser negativo.");
+
+            // Verificar que el carrito tenga productos
+            Carrito carrito = Carrito.getInstancia();
+            Preconditions.checkArgument(!carrito.getProductos().isEmpty(), "El carrito está vacío. Agregue productos.");
+
+            // Calcular subtotal y total con descuento
+            double subtotal = carrito.calcularSubtotal();
+            double total = subtotal - descuento;
+            Preconditions.checkArgument(total >= 0, "El descuento no puede ser mayor que el subtotal.");
+            Preconditions.checkArgument(cancelado >= total, "El monto cancelado es insuficiente. Total a pagar: " + String.format("%.2f", total));
+
+            // Crear venta
             Venta venta = new Venta();
-        venta.setDescuento(Double.parseDouble(TraDescuento.getText()));
-        venta.setCancelado(Double.parseDouble(TraCancela.getText()));
+            venta.setDescuento(descuento);
+            venta.setCancelado(cancelado);
+            Venta.setVentaActual(venta);
 
-        Venta.setVentaActual(venta);
+            // Ir a vista boleta
+            VistaBoleta vb = new VistaBoleta();
+            vb.setVisible(true);
+            dispose();
 
-        VistaBoleta vb = new VistaBoleta();
-        vb.setVisible(true);
-        dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese valores numéricos válidos.");
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_BotonGeneBolTActionPerformed
 
     private void BotonGeneFacTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonGeneFacTActionPerformed
         // TODO add your handling code here:
-        Venta venta = new Venta();
-        venta.setDescuento(Double.parseDouble(TraDescuento.getText()));
-        venta.setCancelado(Double.parseDouble(TraCancela.getText()));
+        try {
+            // Validar campos no vacíos
+            String descuentoStr = TraDescuento.getText().trim();
+            String cancelaStr = TraCancela.getText().trim();
+            Preconditions.checkArgument(!descuentoStr.isEmpty(), "Ingrese el descuento.");
+            Preconditions.checkArgument(!cancelaStr.isEmpty(), "Ingrese el monto cancelado.");
 
-        Venta.setVentaActual(venta); // almacenamos la venta para que la use VistaFactura
+            // Parsear y validar valores numéricos
+            double descuento = Double.parseDouble(descuentoStr);
+            double cancelado = Double.parseDouble(cancelaStr);
+            Preconditions.checkArgument(descuento >= 0, "El descuento no puede ser negativo.");
+            Preconditions.checkArgument(cancelado >= 0, "El monto cancelado no puede ser negativo.");
 
-        VistaFactura vf = new VistaFactura();
-        vf.setVisible(true);
-        dispose();
+            // Verificar que el carrito tenga productos
+            Carrito carrito = Carrito.getInstancia();
+            Preconditions.checkArgument(!carrito.getProductos().isEmpty(), "El carrito está vacío. Agregue productos.");
+
+            // Calcular subtotal y total con descuento
+            double subtotal = carrito.calcularSubtotal();
+            double total = subtotal - descuento;
+            Preconditions.checkArgument(total >= 0, "El descuento no puede ser mayor que el subtotal.");
+            Preconditions.checkArgument(cancelado >= total, "El monto cancelado es insuficiente. Total a pagar: " + String.format("%.2f", total));
+
+            // Crear venta
+            Venta venta = new Venta();
+            venta.setDescuento(descuento);
+            venta.setCancelado(cancelado);
+            Venta.setVentaActual(venta); // Guardamos la venta actual para la factura
+
+            // Mostrar vista factura
+            VistaFactura vf = new VistaFactura();
+            vf.setVisible(true);
+            dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Ingrese valores numéricos válidos.");
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }//GEN-LAST:event_BotonGeneFacTActionPerformed
 
     /**
