@@ -30,43 +30,43 @@ public class ProyectoIntegrador {
      */
     public static void main(String[] args) {  
         // PRUEBA DE CONEXION CON LA BD
-        System.out.println("🔍 Iniciando prueba de conexión...");
+        System.out.println("niciando prueba de conexión...");
         System.out.println(org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream.class.getProtectionDomain().getCodeSource().getLocation());
 
         try {
             // Intenta cargar el driver manualmente (por si el IDE no lo hace)
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("✅ Driver JDBC encontrado.");
+            System.out.println("river JDBC encontrado.");
         } catch (ClassNotFoundException e) {
-            System.out.println("❌ No se encontró el driver JDBC de MySQL.");
-            System.out.println("🔧 Asegúrate de tener el archivo 'mysql-connector-j-x.x.xx.jar' en las librerías del proyecto.");
+            System.out.println("No se encontró el driver JDBC de MySQL.");
+            System.out.println("Asegúrate de tener el archivo 'mysql-connector-j-x.x.xx.jar' en las librerías del proyecto.");
             return;
         }
 
         try (Connection conn = BaseDatos.conectar()) {
             if (conn != null && !conn.isClosed()) {
-                System.out.println("✅ Conexión exitosa a la base de datos.");
+                System.out.println("Conexión exitosa a la base de datos.");
             } else {
-                System.out.println("⚠️ La conexión se estableció pero está cerrada.");
+                System.out.println("La conexión se estableció pero está cerrada.");
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error al conectar a la base de datos:");
-            System.out.println("📄 Mensaje: " + e.getMessage());
-            System.out.println("📌 SQLState: " + e.getSQLState());
-            System.out.println("❗ Código de error: " + e.getErrorCode());
+            System.out.println("Error al conectar a la base de datos:");
+            System.out.println("Mensaje: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Código de error: " + e.getErrorCode());
 
             switch (e.getSQLState()) {
                 case "08001":
-                    System.out.println("🔍 Posible causa: el servidor de base de datos no está disponible (host o puerto incorrecto).");
+                    System.out.println("Posible causa: el servidor de base de datos no está disponible (host o puerto incorrecto).");
                     break;
                 case "28000":
-                    System.out.println("🔐 Error de autenticación: usuario o contraseña incorrectos.");
+                    System.out.println("Error de autenticación: usuario o contraseña incorrectos.");
                     break;
                 case "42000":
-                    System.out.println("🗂️ La base de datos no existe o hay un error en la URL.");
+                    System.out.println("La base de datos no existe o hay un error en la URL.");
                     break;
                 default:
-                    System.out.println("❓ Error desconocido. Revisa la configuración y asegúrate de que MySQL esté ejecutándose.");
+                    System.out.println("Error desconocido. Revisa la configuración y asegúrate de que MySQL esté ejecutándose.");
             }
             return; // Detener si hay error de conexión
         }
