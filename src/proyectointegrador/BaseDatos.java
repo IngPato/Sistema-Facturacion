@@ -7,6 +7,8 @@ package proyectointegrador;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Clase BaseDatos
@@ -26,6 +28,7 @@ import java.sql.SQLException;
  * @author GPatr
  */
 public class BaseDatos {
+    private static final Logger logger = LoggerFactory.getLogger(BaseDatos.class);
     // URL de conexión a la base de datos (nombre de la base de datos: minimarket_db)
     private static final String URL = "jdbc:mysql://localhost:3306/minimarket_db";
     // Usuario y contraseña para la base de datos
@@ -42,7 +45,10 @@ public class BaseDatos {
      * @throws SQLException Si ocurre un error al establecer la conexión.
      */
     public static Connection conectar() throws SQLException {
-        return DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);
+        logger.info("Intentando conectar a la base de datos (método conectar)");
+        Connection nuevaConexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);
+        logger.info("Conexión temporal establecida con éxito");
+        return nuevaConexion;
     }
 
     /**
@@ -54,10 +60,14 @@ public class BaseDatos {
     public static Connection getConnection() {
         if (con == null) {
             try {
+                logger.info("Estableciendo conexión persistente a la base de datos");
                 con = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);
+                logger.info("Conexión persistente establecida correctamente");
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                logger.error("Error al establecer conexión persistente con la base de datos", ex);
             }
+        } else {
+            logger.debug("Conexión persistente reutilizada");
         }
         return con;
     }
