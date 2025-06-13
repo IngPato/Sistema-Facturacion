@@ -59,7 +59,7 @@ public class DetalleVenta {
         this.cantidad = cantidad;
     }
 
-    //METODOS
+    //METHODS
     /**
      * Registra los detalles de la venta (productos vendidos) en la tabla detalle_venta.
      *
