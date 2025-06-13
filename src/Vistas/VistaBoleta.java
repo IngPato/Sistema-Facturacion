@@ -115,19 +115,20 @@ public class VistaBoleta extends javax.swing.JFrame {
         jdFecha_actual = new com.toedter.calendar.JDateChooser();
         BolEmpresa = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         BotonCerrarB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(135, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(216, 255, 216));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(131, 179, 255), 5));
 
         BolSubtotal.setEditable(false);
-        BolSubtotal.setBackground(new java.awt.Color(135, 255, 153));
+        BolSubtotal.setBackground(new java.awt.Color(216, 255, 216));
         BolSubtotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolSubtotal.setForeground(new java.awt.Color(0, 0, 0));
         BolSubtotal.addActionListener(new java.awt.event.ActionListener() {
@@ -136,23 +137,23 @@ public class VistaBoleta extends javax.swing.JFrame {
             }
         });
 
-        BolDescuento.setBackground(new java.awt.Color(135, 255, 153));
+        BolDescuento.setBackground(new java.awt.Color(216, 255, 216));
         BolDescuento.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolDescuento.setForeground(new java.awt.Color(0, 0, 0));
 
-        BolTotal.setBackground(new java.awt.Color(135, 255, 153));
+        BolTotal.setBackground(new java.awt.Color(216, 255, 216));
         BolTotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolTotal.setForeground(new java.awt.Color(0, 0, 0));
 
-        BolPago.setBackground(new java.awt.Color(135, 255, 153));
+        BolPago.setBackground(new java.awt.Color(216, 255, 216));
         BolPago.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolPago.setForeground(new java.awt.Color(0, 0, 0));
 
-        BolCambio.setBackground(new java.awt.Color(135, 255, 153));
+        BolCambio.setBackground(new java.awt.Color(216, 255, 216));
         BolCambio.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolCambio.setForeground(new java.awt.Color(0, 0, 0));
 
-        BolDni.setBackground(new java.awt.Color(135, 255, 153));
+        BolDni.setBackground(new java.awt.Color(216, 255, 216));
         BolDni.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolDni.setForeground(new java.awt.Color(0, 0, 0));
         BolDni.addActionListener(new java.awt.event.ActionListener() {
@@ -161,18 +162,20 @@ public class VistaBoleta extends javax.swing.JFrame {
             }
         });
 
-        BolNombre.setBackground(new java.awt.Color(135, 255, 153));
+        BolNombre.setBackground(new java.awt.Color(216, 255, 216));
         BolNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolNombre.setForeground(new java.awt.Color(0, 0, 0));
 
-        BotonAtrasB.setBackground(new java.awt.Color(131, 179, 255));
+        BotonAtrasB.setBackground(new java.awt.Color(179, 217, 255));
         BotonAtrasB.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonAtrasB.setForeground(new java.awt.Color(0, 0, 0));
+        BotonAtrasB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletaVolver.png"))); // NOI18N
         BotonAtrasB.setText("Volver Atras");
 
-        BotonGenBol.setBackground(new java.awt.Color(131, 179, 255));
+        BotonGenBol.setBackground(new java.awt.Color(179, 217, 255));
         BotonGenBol.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonGenBol.setForeground(new java.awt.Color(0, 0, 0));
+        BotonGenBol.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletagenerar.png"))); // NOI18N
         BotonGenBol.setText("Generar Boleta");
         BotonGenBol.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,11 +219,11 @@ public class VistaBoleta extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Fecha");
 
-        jdFecha_actual.setBackground(new java.awt.Color(135, 255, 153));
-        jdFecha_actual.setForeground(new java.awt.Color(135, 255, 153));
+        jdFecha_actual.setBackground(new java.awt.Color(216, 255, 216));
+        jdFecha_actual.setForeground(new java.awt.Color(216, 255, 216));
         jdFecha_actual.setDateFormatString("dd/MM/yyyy HH:mm:ss");
 
-        BolEmpresa.setBackground(new java.awt.Color(135, 255, 153));
+        BolEmpresa.setBackground(new java.awt.Color(216, 255, 216));
         BolEmpresa.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolEmpresa.setForeground(new java.awt.Color(0, 0, 0));
         BolEmpresa.addActionListener(new java.awt.event.ActionListener() {
@@ -228,6 +231,13 @@ public class VistaBoleta extends javax.swing.JFrame {
                 BolEmpresaActionPerformed(evt);
             }
         });
+
+        jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Generar Boleta");
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoleta.png"))); // NOI18N
+        jLabel11.setText("jLabel11");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -264,15 +274,25 @@ public class VistaBoleta extends javax.swing.JFrame {
                 .addGap(26, 26, 26))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(136, 136, 136)
-                .addComponent(BotonAtrasB, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BotonAtrasB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BotonGenBol)
                 .addGap(111, 111, 111))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(202, 202, 202))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(7, 7, 7)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BolDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
@@ -304,30 +324,26 @@ public class VistaBoleta extends javax.swing.JFrame {
                             .addComponent(BolCambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)))
                     .addComponent(jdFecha_actual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotonAtrasB)
                     .addComponent(BotonGenBol))
                 .addGap(28, 28, 28))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 42, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(59, 32, -1, 400));
 
-        jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Generar Boleta");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 6, -1, -1));
-
-        BotonCerrarB.setBackground(new java.awt.Color(131, 179, 255));
+        BotonCerrarB.setBackground(new java.awt.Color(179, 217, 255));
         BotonCerrarB.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonCerrarB.setForeground(new java.awt.Color(0, 0, 0));
+        BotonCerrarB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminexit.png"))); // NOI18N
         BotonCerrarB.setText("Cerrar Sesión");
         BotonCerrarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonCerrarBActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonCerrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 470, -1, -1));
+        jPanel1.add(BotonCerrarB, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 500));
 
@@ -487,6 +503,7 @@ public class VistaBoleta extends javax.swing.JFrame {
     private javax.swing.JButton BotonGenBol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

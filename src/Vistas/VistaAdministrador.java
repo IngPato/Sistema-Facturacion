@@ -84,6 +84,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         BotonLimpiarA = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         AdminNombre = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -100,7 +101,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(135, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(216, 255, 216));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -110,9 +111,9 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("ADMIN");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 11, -1, 56));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 56));
 
-        AdminCategorias.setBackground(new java.awt.Color(135, 255, 153));
+        AdminCategorias.setBackground(new java.awt.Color(216, 255, 216));
         AdminCategorias.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         AdminCategorias.setForeground(new java.awt.Color(0, 0, 0));
         AdminCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -122,24 +123,25 @@ public class VistaAdministrador extends javax.swing.JFrame {
         });
         jPanel2.add(AdminCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 155, -1));
 
-        AdminPrecio.setBackground(new java.awt.Color(135, 255, 153));
+        AdminPrecio.setBackground(new java.awt.Color(216, 255, 216));
         AdminPrecio.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         AdminPrecio.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(AdminPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 11, 100, -1));
 
-        AdminCantidad.setBackground(new java.awt.Color(135, 255, 153));
+        AdminCantidad.setBackground(new java.awt.Color(216, 255, 216));
         AdminCantidad.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         AdminCantidad.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(AdminCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(328, 45, 100, -1));
 
-        AdminCodigo.setBackground(new java.awt.Color(135, 255, 153));
+        AdminCodigo.setBackground(new java.awt.Color(216, 255, 216));
         AdminCodigo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         AdminCodigo.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(AdminCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(446, 11, 138, -1));
 
-        BotonLimpiarA.setBackground(new java.awt.Color(131, 179, 255));
+        BotonLimpiarA.setBackground(new java.awt.Color(179, 217, 255));
         BotonLimpiarA.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonLimpiarA.setForeground(new java.awt.Color(0, 0, 0));
+        BotonLimpiarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminclean.png"))); // NOI18N
         BotonLimpiarA.setText("Limpiar");
         BotonLimpiarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +153,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo56.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(623, 11, 60, -1));
 
-        AdminNombre.setBackground(new java.awt.Color(135, 255, 153));
+        AdminNombre.setBackground(new java.awt.Color(216, 255, 216));
         AdminNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         AdminNombre.setForeground(new java.awt.Color(0, 0, 0));
         AdminNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -160,6 +162,10 @@ public class VistaAdministrador extends javax.swing.JFrame {
             }
         });
         jPanel2.add(AdminNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 155, 20));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdmin.png"))); // NOI18N
+        jLabel3.setText("jLabel3");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 45, 45));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 700, 80));
 
@@ -203,14 +209,15 @@ public class VistaAdministrador extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(131, 179, 255), 5));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        AdminBuscar.setBackground(new java.awt.Color(135, 255, 153));
+        AdminBuscar.setBackground(new java.awt.Color(216, 255, 216));
         AdminBuscar.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         AdminBuscar.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel5.add(AdminBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 11, 210, -1));
+        jPanel5.add(AdminBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 190, 26));
 
-        BotonAgregarA.setBackground(new java.awt.Color(131, 179, 255));
+        BotonAgregarA.setBackground(new java.awt.Color(179, 217, 255));
         BotonAgregarA.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonAgregarA.setForeground(new java.awt.Color(0, 0, 0));
+        BotonAgregarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminadd.png"))); // NOI18N
         BotonAgregarA.setText("Agregar");
         BotonAgregarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,9 +226,10 @@ public class VistaAdministrador extends javax.swing.JFrame {
         });
         jPanel5.add(BotonAgregarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 11, -1, -1));
 
-        BotonEditarA.setBackground(new java.awt.Color(131, 179, 255));
+        BotonEditarA.setBackground(new java.awt.Color(179, 217, 255));
         BotonEditarA.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonEditarA.setForeground(new java.awt.Color(0, 0, 0));
+        BotonEditarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminedit.png"))); // NOI18N
         BotonEditarA.setText("Editar");
         BotonEditarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,9 +238,10 @@ public class VistaAdministrador extends javax.swing.JFrame {
         });
         jPanel5.add(BotonEditarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 11, -1, -1));
 
-        BotonEliminarA.setBackground(new java.awt.Color(131, 179, 255));
+        BotonEliminarA.setBackground(new java.awt.Color(179, 217, 255));
         BotonEliminarA.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonEliminarA.setForeground(new java.awt.Color(0, 0, 0));
+        BotonEliminarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdmindelete.png"))); // NOI18N
         BotonEliminarA.setText("Eliminar");
         BotonEliminarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,9 +250,10 @@ public class VistaAdministrador extends javax.swing.JFrame {
         });
         jPanel5.add(BotonEliminarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 11, -1, -1));
 
-        BotonBuscarA.setBackground(new java.awt.Color(131, 179, 255));
+        BotonBuscarA.setBackground(new java.awt.Color(179, 217, 255));
         BotonBuscarA.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonBuscarA.setForeground(new java.awt.Color(0, 0, 0));
+        BotonBuscarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminsearch.png"))); // NOI18N
         BotonBuscarA.setText("Buscar");
         BotonBuscarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,27 +264,29 @@ public class VistaAdministrador extends javax.swing.JFrame {
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 96, 700, 50));
 
-        BotonRegistroA.setBackground(new java.awt.Color(131, 179, 255));
+        BotonRegistroA.setBackground(new java.awt.Color(179, 217, 255));
         BotonRegistroA.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonRegistroA.setForeground(new java.awt.Color(0, 0, 0));
+        BotonRegistroA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminRegistro.png"))); // NOI18N
         BotonRegistroA.setText("Registro de ventas");
         BotonRegistroA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonRegistroAActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonRegistroA, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
+        jPanel1.add(BotonRegistroA, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, -1, -1));
 
-        BotonCerrarA.setBackground(new java.awt.Color(131, 179, 255));
+        BotonCerrarA.setBackground(new java.awt.Color(179, 217, 255));
         BotonCerrarA.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonCerrarA.setForeground(new java.awt.Color(0, 0, 0));
+        BotonCerrarA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminexit.png"))); // NOI18N
         BotonCerrarA.setText("Cerrar Sesión");
         BotonCerrarA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonCerrarAActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonCerrarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 420, -1, -1));
+        jPanel1.add(BotonCerrarA, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 450));
 
@@ -589,6 +601,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
     private javax.swing.JTable TablaAdmin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

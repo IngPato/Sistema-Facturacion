@@ -111,47 +111,49 @@ public class VistaFactura extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         BotonGenFac = new javax.swing.JButton();
         FacEmpresa = new javax.swing.JComboBox<>();
-        BotonCerrarF = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        BotonCerrarF = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(135, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(216, 255, 216));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(131, 179, 255), 5));
 
-        FacSubtotal.setBackground(new java.awt.Color(135, 255, 153));
+        FacSubtotal.setBackground(new java.awt.Color(216, 255, 216));
         FacSubtotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacSubtotal.setForeground(new java.awt.Color(0, 0, 0));
 
-        FacDescuento.setBackground(new java.awt.Color(135, 255, 153));
+        FacDescuento.setBackground(new java.awt.Color(216, 255, 216));
         FacDescuento.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacDescuento.setForeground(new java.awt.Color(0, 0, 0));
 
-        FacTotal.setBackground(new java.awt.Color(135, 255, 153));
+        FacTotal.setBackground(new java.awt.Color(216, 255, 216));
         FacTotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacTotal.setForeground(new java.awt.Color(0, 0, 0));
 
-        FacPago.setBackground(new java.awt.Color(135, 255, 153));
+        FacPago.setBackground(new java.awt.Color(216, 255, 216));
         FacPago.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacPago.setForeground(new java.awt.Color(0, 0, 0));
 
-        FacCambio.setBackground(new java.awt.Color(135, 255, 153));
+        FacCambio.setBackground(new java.awt.Color(216, 255, 216));
         FacCambio.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacCambio.setForeground(new java.awt.Color(0, 0, 0));
 
-        BotonAtrasF.setBackground(new java.awt.Color(131, 179, 255));
+        BotonAtrasF.setBackground(new java.awt.Color(179, 217, 255));
         BotonAtrasF.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonAtrasF.setForeground(new java.awt.Color(0, 0, 0));
+        BotonAtrasF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletaVolver.png"))); // NOI18N
         BotonAtrasF.setText("Volver Atras");
 
-        FacRuc.setBackground(new java.awt.Color(135, 255, 153));
+        FacRuc.setBackground(new java.awt.Color(216, 255, 216));
         FacRuc.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacRuc.setForeground(new java.awt.Color(0, 0, 0));
 
-        FacNombre.setBackground(new java.awt.Color(135, 255, 153));
+        FacNombre.setBackground(new java.awt.Color(216, 255, 216));
         FacNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacNombre.setForeground(new java.awt.Color(0, 0, 0));
         FacNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -160,10 +162,10 @@ public class VistaFactura extends javax.swing.JFrame {
             }
         });
 
-        jdFecha_actual.setBackground(new java.awt.Color(135, 255, 153));
+        jdFecha_actual.setBackground(new java.awt.Color(216, 255, 216));
         jdFecha_actual.setDateFormatString("dd/MM/yyyy HH:mm:ss");
 
-        FacCorreo.setBackground(new java.awt.Color(135, 255, 153));
+        FacCorreo.setBackground(new java.awt.Color(216, 255, 216));
         FacCorreo.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacCorreo.setForeground(new java.awt.Color(0, 0, 0));
         FacCorreo.addActionListener(new java.awt.event.ActionListener() {
@@ -212,9 +214,10 @@ public class VistaFactura extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Correo");
 
-        BotonGenFac.setBackground(new java.awt.Color(131, 179, 255));
+        BotonGenFac.setBackground(new java.awt.Color(179, 217, 255));
         BotonGenFac.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonGenFac.setForeground(new java.awt.Color(0, 0, 0));
+        BotonGenFac.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletagenerar.png"))); // NOI18N
         BotonGenFac.setText("Generar Factura");
         BotonGenFac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +225,7 @@ public class VistaFactura extends javax.swing.JFrame {
             }
         });
 
-        FacEmpresa.setBackground(new java.awt.Color(135, 255, 153));
+        FacEmpresa.setBackground(new java.awt.Color(216, 255, 216));
         FacEmpresa.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacEmpresa.setForeground(new java.awt.Color(0, 0, 0));
         FacEmpresa.addActionListener(new java.awt.event.ActionListener() {
@@ -231,6 +234,13 @@ public class VistaFactura extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Generar Factura");
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoFactura.png"))); // NOI18N
+        jLabel12.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -238,7 +248,7 @@ public class VistaFactura extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(BotonAtrasF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
                 .addComponent(BotonGenFac)
                 .addGap(93, 93, 93))
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -254,11 +264,11 @@ public class VistaFactura extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(FacSubtotal)
-                    .addComponent(FacDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addComponent(FacDescuento)
                     .addComponent(FacTotal)
                     .addComponent(FacPago)
                     .addComponent(FacCambio)
-                    .addComponent(FacEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(FacEmpresa, 0, 183, Short.MAX_VALUE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -272,11 +282,21 @@ public class VistaFactura extends javax.swing.JFrame {
                     .addComponent(jdFecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                     .addComponent(FacCorreo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(200, 200, 200))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(FacRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
@@ -315,10 +335,10 @@ public class VistaFactura extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BotonAtrasF)
                     .addComponent(BotonGenFac))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        BotonCerrarF.setBackground(new java.awt.Color(131, 179, 255));
+        BotonCerrarF.setBackground(new java.awt.Color(179, 217, 255));
         BotonCerrarF.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonCerrarF.setForeground(new java.awt.Color(0, 0, 0));
         BotonCerrarF.setText("Cerrar Sesión");
@@ -328,38 +348,25 @@ public class VistaFactura extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Generar Factura");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(272, 272, 272))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(BotonCerrarF)
-                        .addGap(25, 25, 25))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BotonCerrarF)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(26, 26, 26)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BotonCerrarF)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 440));
@@ -523,6 +530,7 @@ public class VistaFactura extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

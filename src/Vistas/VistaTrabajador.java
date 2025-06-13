@@ -170,6 +170,7 @@ public class VistaTrabajador extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         BuscarTra = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -199,7 +200,7 @@ public class VistaTrabajador extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(135, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(216, 255, 216));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -208,34 +209,35 @@ public class VistaTrabajador extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("TRABAJADOR");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 22, -1, -1));
+        jLabel1.setText("WORKER");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 120, -1));
 
-        TraNombre.setBackground(new java.awt.Color(135, 255, 153));
+        TraNombre.setBackground(new java.awt.Color(216, 255, 216));
         TraNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraNombre.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(TraNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 11, 134, -1));
 
-        TraCantidad.setBackground(new java.awt.Color(135, 255, 153));
+        TraCantidad.setBackground(new java.awt.Color(216, 255, 216));
         TraCantidad.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraCantidad.setForeground(new java.awt.Color(0, 0, 0));
         jPanel2.add(TraCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(474, 11, 131, -1));
 
-        BotonAñadirT.setBackground(new java.awt.Color(131, 179, 255));
+        BotonAñadirT.setBackground(new java.awt.Color(179, 217, 255));
         BotonAñadirT.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonAñadirT.setForeground(new java.awt.Color(0, 0, 0));
+        BotonAñadirT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminadd.png"))); // NOI18N
         BotonAñadirT.setText("AÑADIR");
         BotonAñadirT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonAñadirTActionPerformed(evt);
             }
         });
-        jPanel2.add(BotonAñadirT, new org.netbeans.lib.awtextra.AbsoluteConstraints(416, 45, -1, -1));
+        jPanel2.add(BotonAñadirT, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logo56.png"))); // NOI18N
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 11, -1, -1));
 
-        TraCategorias.setBackground(new java.awt.Color(135, 255, 153));
+        TraCategorias.setBackground(new java.awt.Color(216, 255, 216));
         TraCategorias.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraCategorias.setForeground(new java.awt.Color(0, 0, 0));
         TraCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -260,16 +262,21 @@ public class VistaTrabajador extends javax.swing.JFrame {
         jLabel5.setText("Categoria");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 48, -1, -1));
 
-        BuscarTra.setBackground(new java.awt.Color(131, 179, 255));
+        BuscarTra.setBackground(new java.awt.Color(179, 217, 255));
         BuscarTra.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BuscarTra.setForeground(new java.awt.Color(0, 0, 0));
+        BuscarTra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminsearch.png"))); // NOI18N
         BuscarTra.setText("BUSCAR");
         BuscarTra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BuscarTraActionPerformed(evt);
             }
         });
-        jPanel2.add(BuscarTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(512, 45, -1, -1));
+        jPanel2.add(BuscarTra, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, -1));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Icowork.png"))); // NOI18N
+        jLabel13.setText("jLabel13");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 48, 48));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 719, 76));
 
@@ -317,7 +324,7 @@ public class VistaTrabajador extends javax.swing.JFrame {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(131, 179, 255), 5));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        TraSubtotal.setBackground(new java.awt.Color(135, 255, 153));
+        TraSubtotal.setBackground(new java.awt.Color(216, 255, 216));
         TraSubtotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraSubtotal.setForeground(new java.awt.Color(0, 0, 0));
         TraSubtotal.addActionListener(new java.awt.event.ActionListener() {
@@ -327,22 +334,22 @@ public class VistaTrabajador extends javax.swing.JFrame {
         });
         jPanel4.add(TraSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 11, 134, -1));
 
-        TraDescuento.setBackground(new java.awt.Color(135, 255, 153));
+        TraDescuento.setBackground(new java.awt.Color(216, 255, 216));
         TraDescuento.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraDescuento.setForeground(new java.awt.Color(0, 0, 0));
         jPanel4.add(TraDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 134, -1));
 
-        TraTotal.setBackground(new java.awt.Color(135, 255, 153));
+        TraTotal.setBackground(new java.awt.Color(216, 255, 216));
         TraTotal.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraTotal.setForeground(new java.awt.Color(0, 0, 0));
         jPanel4.add(TraTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 50, 134, -1));
 
-        TraCancela.setBackground(new java.awt.Color(135, 255, 153));
+        TraCancela.setBackground(new java.awt.Color(216, 255, 216));
         TraCancela.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraCancela.setForeground(new java.awt.Color(0, 0, 0));
         jPanel4.add(TraCancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 134, -1));
 
-        TraCambio.setBackground(new java.awt.Color(135, 255, 153));
+        TraCambio.setBackground(new java.awt.Color(216, 255, 216));
         TraCambio.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TraCambio.setForeground(new java.awt.Color(0, 0, 0));
         jPanel4.add(TraCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 134, -1));
@@ -372,9 +379,10 @@ public class VistaTrabajador extends javax.swing.JFrame {
         jLabel10.setText("Cambio");
         jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, 20));
 
-        BotonGeneBolT.setBackground(new java.awt.Color(131, 179, 255));
+        BotonGeneBolT.setBackground(new java.awt.Color(179, 217, 255));
         BotonGeneBolT.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonGeneBolT.setForeground(new java.awt.Color(0, 0, 0));
+        BotonGeneBolT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoWorkboleta.png"))); // NOI18N
         BotonGeneBolT.setText("Generar Boleta");
         BotonGeneBolT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -383,9 +391,10 @@ public class VistaTrabajador extends javax.swing.JFrame {
         });
         jPanel4.add(BotonGeneBolT, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, -1, -1));
 
-        BotonGeneFacT.setBackground(new java.awt.Color(131, 179, 255));
+        BotonGeneFacT.setBackground(new java.awt.Color(179, 217, 255));
         BotonGeneFacT.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonGeneFacT.setForeground(new java.awt.Color(0, 0, 0));
+        BotonGeneFacT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoWorkfactura.png"))); // NOI18N
         BotonGeneFacT.setText("Generar Factura");
         BotonGeneFacT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,16 +405,17 @@ public class VistaTrabajador extends javax.swing.JFrame {
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 408, 720, 90));
 
-        BotonCerrarT.setBackground(new java.awt.Color(131, 179, 255));
+        BotonCerrarT.setBackground(new java.awt.Color(179, 217, 255));
         BotonCerrarT.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BotonCerrarT.setForeground(new java.awt.Color(0, 0, 0));
+        BotonCerrarT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoAdminexit.png"))); // NOI18N
         BotonCerrarT.setText("Cerrar sesión");
         BotonCerrarT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonCerrarTActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonCerrarT, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 507, 129, -1));
+        jPanel1.add(BotonCerrarT, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 507, 140, -1));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(131, 179, 255), 5));
@@ -452,9 +462,10 @@ public class VistaTrabajador extends javax.swing.JFrame {
         jLabel12.setText("SELECCION DE PRODUCTOS");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 88, -1, -1));
 
-        CancelarTra.setBackground(new java.awt.Color(131, 179, 255));
+        CancelarTra.setBackground(new java.awt.Color(179, 217, 255));
         CancelarTra.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         CancelarTra.setForeground(new java.awt.Color(0, 0, 0));
+        CancelarTra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoWorkcancelar.png"))); // NOI18N
         CancelarTra.setText("Cancelar compra");
         CancelarTra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -782,6 +793,7 @@ public class VistaTrabajador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

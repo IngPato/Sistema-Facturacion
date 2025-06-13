@@ -63,17 +63,17 @@ public class RegistroVentas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(135, 255, 153));
+        jPanel1.setBackground(new java.awt.Color(216, 255, 216));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(131, 179, 255), 5));
         jPanel2.setForeground(new java.awt.Color(0, 0, 0));
 
-        MesInicialRV.setBackground(new java.awt.Color(135, 255, 153));
+        MesInicialRV.setBackground(new java.awt.Color(216, 255, 216));
         MesInicialRV.setForeground(new java.awt.Color(0, 0, 0));
 
-        CategoriaRV.setBackground(new java.awt.Color(135, 255, 153));
+        CategoriaRV.setBackground(new java.awt.Color(216, 255, 216));
         CategoriaRV.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         CategoriaRV.setForeground(new java.awt.Color(0, 0, 0));
         CategoriaRV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -90,7 +90,7 @@ public class RegistroVentas extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Mes Inicial:");
 
-        MesFinalRV.setBackground(new java.awt.Color(135, 255, 153));
+        MesFinalRV.setBackground(new java.awt.Color(216, 255, 216));
 
         jLabel4.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
@@ -100,7 +100,7 @@ public class RegistroVentas extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Categoria:");
 
-        TrabajadorRV.setBackground(new java.awt.Color(135, 255, 153));
+        TrabajadorRV.setBackground(new java.awt.Color(216, 255, 216));
         TrabajadorRV.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         TrabajadorRV.setForeground(new java.awt.Color(0, 0, 0));
         TrabajadorRV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -110,7 +110,7 @@ public class RegistroVentas extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(131, 179, 255));
+        jButton1.setBackground(new java.awt.Color(179, 217, 255));
         jButton1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("Actualizar");
@@ -154,17 +154,14 @@ public class RegistroVentas extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(TrabajadorRV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(MesFinalRV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(CategoriaRV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel5))))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(MesFinalRV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(CategoriaRV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -227,13 +224,13 @@ public class RegistroVentas extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 710, -1));
 
-        CerrarRV.setBackground(new java.awt.Color(131, 179, 255));
+        CerrarRV.setBackground(new java.awt.Color(179, 217, 255));
         CerrarRV.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         CerrarRV.setForeground(new java.awt.Color(0, 0, 0));
         CerrarRV.setText("Cerrar Sesion");
         jPanel1.add(CerrarRV, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 410, -1, -1));
 
-        VolverRV.setBackground(new java.awt.Color(131, 179, 255));
+        VolverRV.setBackground(new java.awt.Color(179, 217, 255));
         VolverRV.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         VolverRV.setForeground(new java.awt.Color(0, 0, 0));
         VolverRV.setText("Volver Atras");
