@@ -42,7 +42,6 @@ public abstract class Comprobante {
     }
     
     
-
     /**
      * Método abstracto que debe generar el PDF del comprobante.
      */
