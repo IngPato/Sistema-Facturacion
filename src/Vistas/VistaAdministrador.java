@@ -7,9 +7,10 @@ package Vistas;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import javax.swing.JOptionPane;
-import proyectointegrador.Producto;
+import Modelos.Producto;
 import Adicionales.PlaceHolder;
-import proyectointegrador.Administrador;
+import Controladores.AdministradorControlador;
+import Modelos.Administrador;
 import com.google.common.base.Preconditions;
 
 /**
@@ -23,13 +24,14 @@ import com.google.common.base.Preconditions;
  * @author GPatr
  */
 public class VistaAdministrador extends javax.swing.JFrame {
-
+private AdministradorControlador controlador;
     /**
      * Constructor de la clase VistaAdministrador. Inicializa los componentes de
      * la interfaz gráfica y carga los productos en la tabla de la vista.
      */
     public VistaAdministrador() {
         initComponents();
+        controlador = new AdministradorControlador();
         cargarProductosEnTabla();
         // Se inicializan los placeholders en los campos de texto.
         PlaceHolder nombre = new PlaceHolder("Nombre", AdminNombre);
@@ -39,7 +41,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
         PlaceHolder codigo = new PlaceHolder("Código", AdminCodigo);
         PlaceHolder buscar = new PlaceHolder("Buscar por nombre o código", AdminBuscar);
     }
-
     // Métodos
     /**
      * Carga los productos en la tabla de administración. Obtiene los productos
@@ -47,23 +48,22 @@ public class VistaAdministrador extends javax.swing.JFrame {
      * tabla en la interfaz gráfica.
      */
     public void cargarProductosEnTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) TablaAdmin.getModel();
-        modelo.setRowCount(0); // Limpiar tabla
+    DefaultTableModel modelo = (DefaultTableModel) TablaAdmin.getModel();
+    modelo.setRowCount(0); // Limpiar tabla
 
-        Administrador admin = new Administrador();
-        List<Producto> lista = admin.listarProductos();
+    List<Producto> lista = controlador.listarProductos();
 
-        for (Producto p : lista) {
-            modelo.addRow(new Object[]{
-                p.getId(),
-                p.getNombre(),
-                p.getCategoria(),
-                p.getPrecio(),
-                p.getStock(),
-                p.getCodigo()
-            });
-        }
+    for (Producto p : lista) {
+        modelo.addRow(new Object[]{
+            p.getId(),
+            p.getNombre(),
+            p.getCategoria(),
+            p.getPrecio(),
+            p.getStock(),
+            p.getCodigo()
+        });
     }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -310,7 +310,6 @@ public class VistaAdministrador extends javax.swing.JFrame {
         }
 
         try {
-            // Obtener los datos del producto de la tabla y los campos de texto
             int id = (int) TablaAdmin.getValueAt(fila, 0);
             String nombre = AdminNombre.getText();
             String categoria = AdminCategorias.getText();
@@ -318,7 +317,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
             String cantidadTexto = AdminCantidad.getText();
             String codigo = AdminCodigo.getText();
 
-            // Precondiciones para validar entradas
+            // Validaciones
             Preconditions.checkNotNull(nombre, "El nombre no puede ser nulo.");
             Preconditions.checkArgument(!nombre.trim().isEmpty(), "El nombre no puede estar vacío.");
 
@@ -337,28 +336,21 @@ public class VistaAdministrador extends javax.swing.JFrame {
             double precio = Double.parseDouble(precioTexto);
             int cantidad = Integer.parseInt(cantidadTexto);
 
-            // Crear un objeto Producto con los datos obtenidos
             Producto p = new Producto(id, nombre, categoria, precio, cantidad, codigo);
 
-            // Crear un objeto Administrador y llamar al método editarProducto para modificar el producto
-            Administrador admin = new Administrador();
-
-            if (admin.editarProducto(p)) {
-                // Si la edición fue exitosa, mostrar mensaje y recargar la tabla
+            // Llamar al controlador
+            if (controlador.editarProducto(p)) {
                 JOptionPane.showMessageDialog(null, "Producto editado correctamente.");
                 cargarProductosEnTabla();
             } else {
-                // Si no se pudo editar el producto, mostrar mensaje de error    
                 JOptionPane.showMessageDialog(null, "No se pudo editar el producto.");
             }
 
         } catch (NumberFormatException e) {
-            // Si ocurre un error al convertir el precio o la cantidad, mostrar mensaje de error
             JOptionPane.showMessageDialog(null, "Precio o cantidad inválidos.");
         } catch (IllegalArgumentException | NullPointerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
     }//GEN-LAST:event_BotonEditarAActionPerformed
 
     /**
@@ -377,7 +369,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
         String cantidadTexto = AdminCantidad.getText();
 
         try {
-            // Validar precondiciones
+            // Validaciones
             Preconditions.checkNotNull(nombre, "El nombre no puede ser nulo.");
             Preconditions.checkArgument(!nombre.trim().isEmpty(), "El nombre no puede estar vacío.");
 
@@ -393,19 +385,19 @@ public class VistaAdministrador extends javax.swing.JFrame {
             Preconditions.checkNotNull(cantidadTexto, "La cantidad no puede ser nula.");
             Preconditions.checkArgument(!cantidadTexto.trim().isEmpty(), "La cantidad no puede estar vacía.");
 
-            // Convertir y validar valores numéricos
             double precio = Double.parseDouble(precioTexto);
             int cantidad = Integer.parseInt(cantidadTexto);
 
             Producto p = new Producto(0, nombre, categoria, precio, cantidad, codigo);
-            Administrador admin = new Administrador();
 
-            if (admin.agregarProducto(p)) {
+            // Llamada al controlador 
+            if (controlador.agregarProducto(p)) {
                 JOptionPane.showMessageDialog(null, "Producto agregado correctamente.");
                 cargarProductosEnTabla();
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo agregar el producto.");
             }
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Precio o cantidad no válidos.");
         } catch (IllegalArgumentException | NullPointerException e) {
@@ -428,19 +420,20 @@ public class VistaAdministrador extends javax.swing.JFrame {
      * Los resultados se muestran en la tabla de productos.
      */
     private void BotonBuscarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarAActionPerformed
-        // TODO add your handling code here:
+         // TODO add your handling code here:
         String valor = AdminBuscar.getText().trim();
 
         try {
-            // Validar que el valor de búsqueda no esté vacío o nulo
+            // Validar entrada
             Preconditions.checkNotNull(valor, "El campo de búsqueda no puede ser nulo.");
             Preconditions.checkArgument(!valor.isEmpty(), "Ingrese un valor para buscar.");
 
+            // Limpiar tabla
             DefaultTableModel modelo = (DefaultTableModel) TablaAdmin.getModel();
             modelo.setRowCount(0);
 
-            Administrador admin = new Administrador();
-            List<Producto> lista = admin.buscarProducto(valor);
+            // Buscar con el controlador
+            List<Producto> lista = controlador.buscarProducto(valor);
 
             for (Producto p : lista) {
                 modelo.addRow(new Object[]{
@@ -448,10 +441,10 @@ public class VistaAdministrador extends javax.swing.JFrame {
                 });
             }
 
-            // Si no se encuentra ningún producto
             if (lista.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No se encontraron productos con ese criterio.");
             }
+
         } catch (IllegalArgumentException | NullPointerException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -498,7 +491,7 @@ public class VistaAdministrador extends javax.swing.JFrame {
      */
     private void BotonRegistroAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonRegistroAActionPerformed
         // TODO add your handling code here:
-        RegistroVentas vistaRegistro = new RegistroVentas(); // Instancia de registro ventas
+        VistaRegistroVentas vistaRegistro = new VistaRegistroVentas(); // Instancia de registro ventas
         vistaRegistro.setVisible(true);                      // Muestra la vista registro ventas
         this.dispose();
     }//GEN-LAST:event_BotonRegistroAActionPerformed
@@ -516,18 +509,18 @@ public class VistaAdministrador extends javax.swing.JFrame {
         try {
             int fila = TablaAdmin.getSelectedRow();
 
-            // Validar que se haya seleccionado una fila
             Preconditions.checkArgument(fila != -1, "Seleccione un producto para eliminar.");
 
             int id = (int) TablaAdmin.getValueAt(fila, 0);
-            Administrador admin = new Administrador();
 
-            if (admin.eliminarProducto(id)) {
+            // Usar el controlador
+            if (controlador.eliminarProducto(id)) {
                 JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
                 cargarProductosEnTabla();
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto.");
             }
+
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -540,13 +533,8 @@ public class VistaAdministrador extends javax.swing.JFrame {
      */
     private void BotonCerrarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCerrarAActionPerformed
         // TODO add your handling code here:
-        // Cerrar esta ventana
-        this.dispose();
-
-        // Abrir la ventana de Login
-        Vistas.Login login = new Vistas.Login();
-        login.setVisible(true);
-
+        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_BotonCerrarAActionPerformed
 
     /**

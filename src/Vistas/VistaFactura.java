@@ -12,12 +12,13 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import proyectointegrador.BaseDatos;
-import proyectointegrador.Carrito;
-import proyectointegrador.Empresa;
-import proyectointegrador.Venta;
-import proyectointegrador.Factura;
-import proyectointegrador.Producto;
+import Modelos.BaseDatos;
+import Modelos.Carrito;
+import Modelos.Empresa;
+import Modelos.Venta;
+import Modelos.Factura;
+import Modelos.Producto;
+import Modelos.Usuario;
 import com.google.common.base.Preconditions;
 /**
  *
@@ -380,12 +381,7 @@ public class VistaFactura extends javax.swing.JFrame {
 
     private void BotonCerrarFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCerrarFActionPerformed
         // TODO add your handling code here:
-        // Cerrar esta ventana
-        this.dispose();
-
-        // Abrir la ventana de Login
-        Vistas.Login login = new Vistas.Login();
-        login.setVisible(true);
+        System.exit(0);
     
     }//GEN-LAST:event_BotonCerrarFActionPerformed
 
@@ -426,7 +422,10 @@ public class VistaFactura extends javax.swing.JFrame {
             String fecha = formatoFecha.format(fechaSeleccionada);
             String hora = formatoHora.format(fechaSeleccionada);
 
-            int idTrabajador = Login.usuarioActual.getId();
+            Usuario actual = Usuario.getUsuarioActual();
+            Preconditions.checkNotNull(actual, "No hay un usuario autenticado actualmente.");
+
+            int idTrabajador = actual.getId();
 
             // Validar carrito
             Carrito carrito = Carrito.getInstancia();
@@ -455,7 +454,7 @@ public class VistaFactura extends javax.swing.JFrame {
             BaseDatos bd = new BaseDatos();
 
             Factura facturapdf = new Factura(empresaSeleccionada, ruc, nombre, correo, total, descuento, modelo);
-            boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa);
+            boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa, "factura");
 
             if (exito) {
                 String codigoFactura = facturapdf.generarPDF();

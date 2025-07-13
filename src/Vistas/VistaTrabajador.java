@@ -11,11 +11,11 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import proyectointegrador.Producto;
-import proyectointegrador.Trabajador;
-import proyectointegrador.Carrito;
-import proyectointegrador.BaseDatos;
-import proyectointegrador.Venta;
+import Modelos.Producto;
+import Modelos.Trabajador;
+import Modelos.Carrito;
+import Modelos.BaseDatos;
+import Modelos.Venta;
 import com.google.common.base.Preconditions;
 
 /**
@@ -543,12 +543,7 @@ public class VistaTrabajador extends javax.swing.JFrame {
      */
     private void BotonCerrarTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCerrarTActionPerformed
         // TODO add your handling code here:
-        // Cerrar esta ventana
-        this.dispose();
-
-        // Abrir la ventana de Login
-        Vistas.Login login = new Vistas.Login();
-        login.setVisible(true);
+        System.exit(0);
     }//GEN-LAST:event_BotonCerrarTActionPerformed
 
     /**
@@ -640,8 +635,8 @@ public class VistaTrabajador extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) TablaTra.getModel();
         modelo.setRowCount(0); // Elimina todas las filas
 
-        // Limpiar el carrito
-        Carrito carrito = new Carrito(); // Nueva instancia vacía
+        // Limpiar el carrito correctamente
+        Carrito.getInstancia().limpiarCarrito();
 
         // Limpiar los campos relacionados
         TraSubtotal.setText("");
@@ -715,7 +710,7 @@ public class VistaTrabajador extends javax.swing.JFrame {
 
             // Calcular subtotal y total con descuento
             double subtotal = carrito.calcularSubtotal();
-            double total = subtotal - descuento;
+            double total = subtotal - (subtotal * descuento / 100.0);
             Preconditions.checkArgument(total >= 0, "El descuento no puede ser mayor que el subtotal.");
             Preconditions.checkArgument(cancelado >= total, "El monto cancelado es insuficiente. Total a pagar: " + String.format("%.2f", total));
 

@@ -4,11 +4,13 @@
  */
 package Vistas;
 
-import proyectointegrador.Usuario;
+import Modelos.Usuario;
 import javax.swing.JOptionPane;
 import Adicionales.PlaceHolder;
 import com.google.common.base.Preconditions;
-
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 /**
  * La clase Login representa una ventana de login en la interfaz gráfica de
  * usuario (GUI), donde los usuarios pueden ingresar su nombre de usuario y
@@ -201,43 +203,6 @@ public class Login extends javax.swing.JFrame {
      */
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
-        // Obtener las credenciales ingresadas por el usuario
-        try {
-        String nombreUsuario = txtUsuario.getText().trim();
-        String contraseña = new String(txtContraseña.getPassword()).trim();
-
-        // Usamos Preconditions para validar
-        Preconditions.checkArgument(!nombreUsuario.isEmpty(), "El nombre de usuario es obligatorio.");
-        Preconditions.checkArgument(!contraseña.isEmpty(), "La contraseña es obligatoria.");
-
-        //verificamos credenciales
-        Usuario usuario = Usuario.verificarCredenciales(nombreUsuario, contraseña);
-
-        if (usuario != null) {
-            switch (usuario.getTipoUsuario()) {
-                case "Administrador":
-                    usuarioActual = usuario;
-                    new VistaAdministrador().setVisible(true);
-                    break;
-                case "Trabajador":
-                    usuarioActual = usuario;
-                    new VistaTrabajador().setVisible(true);
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(this, "Tipo de usuario desconocido.");
-                    return;
-            }
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Credenciales incorrectas o usuario no contratado.");
-        }
-
-    } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(this, ex.getMessage());
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Ocurrió un error: " + ex.getMessage());
-    }
-
     }//GEN-LAST:event_btnIngresarActionPerformed
 
 
@@ -297,4 +262,16 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+    
+    public JButton getBtnIngresar() {
+        return btnIngresar;
+    }
+
+    public JTextField getTxtUsuario() {
+            return txtUsuario;
+    }
+
+    public JPasswordField getTxtContraseña() {
+            return txtContraseña;
+    }
 }

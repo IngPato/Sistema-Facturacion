@@ -9,15 +9,16 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.JOptionPane;
-import proyectointegrador.Empresa;
-import proyectointegrador.Producto;
-import proyectointegrador.Venta;
-import proyectointegrador.Boleta ;
+import Modelos.Empresa;
+import Modelos.Producto;
+import Modelos.Venta;
+import Modelos.Boleta ;
 import java.util.Date;
-import proyectointegrador.BaseDatos;
-import proyectointegrador.Carrito;
+import Modelos.BaseDatos;
+import Modelos.Carrito;
 import javax.swing.table.DefaultTableModel;
 import Adicionales.PlaceHolder;
+import Modelos.Usuario;
 import com.google.common.base.Preconditions;
 
 /**
@@ -82,7 +83,6 @@ public class VistaBoleta extends javax.swing.JFrame {
             BolEmpresa.addItem(empresa);
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -370,12 +370,7 @@ public class VistaBoleta extends javax.swing.JFrame {
 
     private void BotonCerrarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCerrarBActionPerformed
         // TODO add your handling code here:
-        // Cerrar esta ventana
-        this.dispose();
-
-        // Abrir la ventana de Login
-        Vistas.Login login = new Vistas.Login();
-        login.setVisible(true);
+        System.exit(0);
     
     }//GEN-LAST:event_BotonCerrarBActionPerformed
 
@@ -401,7 +396,10 @@ public class VistaBoleta extends javax.swing.JFrame {
             String fecha = formatoFecha.format(fechaSeleccionada);
             String hora = formatoHora.format(fechaSeleccionada);
 
-            int idTrabajador = Login.usuarioActual.getId();
+            Usuario actual = Usuario.getUsuarioActual();
+            Preconditions.checkNotNull(actual, "No hay un usuario autenticado actualmente.");
+
+            int idTrabajador = actual.getId();
 
             // Validar carrito
             Carrito carrito = Carrito.getInstancia();
@@ -430,7 +428,7 @@ public class VistaBoleta extends javax.swing.JFrame {
             Venta venta = Venta.getVentaActual();
             Boleta boletapdf = new Boleta(empresaSeleccionada, dni, nombre, total, descuento, modelo);
 
-            boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa);
+            boolean exito = venta.registrarVentaEnBD(bd, idTrabajador, fecha, hora, idEmpresa, "boleta");
 
             if (exito) {
                 String codigoBoleta = boletapdf.generarPDF();
