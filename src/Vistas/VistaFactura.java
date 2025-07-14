@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Modelos.BaseDatos;
 import Modelos.Carrito;
@@ -20,6 +19,13 @@ import Modelos.Factura;
 import Modelos.Producto;
 import Modelos.Usuario;
 import com.google.common.base.Preconditions;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import javax.swing.JOptionPane;
 /**
  *
  * @author GPatr
@@ -95,7 +101,7 @@ public class VistaFactura extends javax.swing.JFrame {
         FacTotal = new javax.swing.JTextField();
         FacPago = new javax.swing.JTextField();
         FacCambio = new javax.swing.JTextField();
-        BotonAtrasF = new javax.swing.JButton();
+        BotonContableF = new javax.swing.JButton();
         FacRuc = new javax.swing.JTextField();
         FacNombre = new javax.swing.JTextField();
         jdFecha_actual = new com.toedter.calendar.JDateChooser();
@@ -144,11 +150,16 @@ public class VistaFactura extends javax.swing.JFrame {
         FacCambio.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         FacCambio.setForeground(new java.awt.Color(0, 0, 0));
 
-        BotonAtrasF.setBackground(new java.awt.Color(179, 217, 255));
-        BotonAtrasF.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        BotonAtrasF.setForeground(new java.awt.Color(0, 0, 0));
-        BotonAtrasF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletaVolver.png"))); // NOI18N
-        BotonAtrasF.setText("Volver Atras");
+        BotonContableF.setBackground(new java.awt.Color(179, 217, 255));
+        BotonContableF.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        BotonContableF.setForeground(new java.awt.Color(0, 0, 0));
+        BotonContableF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletaVolver.png"))); // NOI18N
+        BotonContableF.setText("Enviar al area Contable");
+        BotonContableF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonContableFActionPerformed(evt);
+            }
+        });
 
         FacRuc.setBackground(new java.awt.Color(216, 255, 216));
         FacRuc.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -246,49 +257,52 @@ public class VistaFactura extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(BotonAtrasF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                .addComponent(BotonGenFac)
-                .addGap(93, 93, 93))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel7))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(FacSubtotal)
-                    .addComponent(FacDescuento)
-                    .addComponent(FacTotal)
-                    .addComponent(FacPago)
-                    .addComponent(FacCambio)
-                    .addComponent(FacEmpresa, 0, 183, Short.MAX_VALUE))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11))
-                .addGap(35, 35, 35)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(FacRuc)
-                    .addComponent(FacNombre)
-                    .addComponent(jdFecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                    .addComponent(FacCorreo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(200, 200, 200))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BotonContableF)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7))
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(FacSubtotal)
+                            .addComponent(FacDescuento)
+                            .addComponent(FacTotal)
+                            .addComponent(FacPago)
+                            .addComponent(FacCambio)
+                            .addComponent(FacEmpresa, 0, 183, Short.MAX_VALUE))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11))
+                        .addGap(35, 35, 35)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(FacRuc)
+                            .addComponent(FacNombre)
+                            .addComponent(jdFecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                            .addComponent(FacCorreo))
+                        .addContainerGap(116, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotonGenFac)
+                        .addGap(93, 93, 93))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +348,7 @@ public class VistaFactura extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotonAtrasF)
+                    .addComponent(BotonContableF)
                     .addComponent(BotonGenFac))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -358,7 +372,7 @@ public class VistaFactura extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(BotonCerrarF)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,6 +492,30 @@ public class VistaFactura extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BotonGenFacActionPerformed
 
+    private void BotonContableFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonContableFActionPerformed
+        // TODO add your handling code here:
+         try {
+         URL url = new URL("http://localhost:8081/mensaje");
+         HttpURLConnection con = (HttpURLConnection) url.openConnection();
+         con.setRequestMethod("GET");
+
+         // Detectar como Java client (esto ya lo hace por defecto)
+         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+         StringBuilder mensaje = new StringBuilder();
+         String line;
+         while ((line = in.readLine()) != null) {
+             mensaje.append(line).append("\n");
+         }
+         in.close();
+
+         JOptionPane.showMessageDialog(null, mensaje.toString().trim(), "Confirmación de Contabilidad", JOptionPane.INFORMATION_MESSAGE);
+
+     } catch (Exception ex) {
+         ex.printStackTrace();
+         JOptionPane.showMessageDialog(null, "❌ Error al contactar con el sistema contable.", "Error", JOptionPane.ERROR_MESSAGE);
+     }
+    }//GEN-LAST:event_BotonContableFActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -514,8 +552,8 @@ public class VistaFactura extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonAtrasF;
     private javax.swing.JButton BotonCerrarF;
+    private javax.swing.JButton BotonContableF;
     private javax.swing.JButton BotonGenFac;
     private javax.swing.JTextField FacCambio;
     private javax.swing.JTextField FacCorreo;

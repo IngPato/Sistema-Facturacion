@@ -20,6 +20,13 @@ import javax.swing.table.DefaultTableModel;
 import Adicionales.PlaceHolder;
 import Modelos.Usuario;
 import com.google.common.base.Preconditions;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import javax.swing.JOptionPane;
 
 /**
  * Esta clase representa la interfaz gráfica para la vista de boletas en el
@@ -101,7 +108,7 @@ public class VistaBoleta extends javax.swing.JFrame {
         BolCambio = new javax.swing.JTextField();
         BolDni = new javax.swing.JTextField();
         BolNombre = new javax.swing.JTextField();
-        BotonAtrasB = new javax.swing.JButton();
+        BotonContableB = new javax.swing.JButton();
         BotonGenBol = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -166,11 +173,16 @@ public class VistaBoleta extends javax.swing.JFrame {
         BolNombre.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
         BolNombre.setForeground(new java.awt.Color(0, 0, 0));
 
-        BotonAtrasB.setBackground(new java.awt.Color(179, 217, 255));
-        BotonAtrasB.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        BotonAtrasB.setForeground(new java.awt.Color(0, 0, 0));
-        BotonAtrasB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletaVolver.png"))); // NOI18N
-        BotonAtrasB.setText("Volver Atras");
+        BotonContableB.setBackground(new java.awt.Color(179, 217, 255));
+        BotonContableB.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        BotonContableB.setForeground(new java.awt.Color(0, 0, 0));
+        BotonContableB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IcoBoletaVolver.png"))); // NOI18N
+        BotonContableB.setText("Enviar al area Contable");
+        BotonContableB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonContableBActionPerformed(evt);
+            }
+        });
 
         BotonGenBol.setBackground(new java.awt.Color(179, 217, 255));
         BotonGenBol.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
@@ -243,47 +255,51 @@ public class VistaBoleta extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel7))
-                .addGap(42, 42, 42)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BolTotal)
-                    .addComponent(BolPago)
-                    .addComponent(BolCambio)
-                    .addComponent(BolSubtotal)
-                    .addComponent(BolDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addComponent(BolEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addGap(49, 49, 49)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jdFecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                    .addComponent(BolNombre)
-                    .addComponent(BolDni))
-                .addGap(26, 26, 26))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(BotonAtrasB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BotonGenBol)
-                .addGap(111, 111, 111))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addGap(202, 202, 202))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(112, Short.MAX_VALUE)
+                        .addComponent(BotonContableB))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BolTotal)
+                            .addComponent(BolPago)
+                            .addComponent(BolCambio)
+                            .addComponent(BolSubtotal)
+                            .addComponent(BolDescuento, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(BolEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jdFecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                            .addComponent(BolNombre)
+                            .addComponent(BolDni))
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(BotonGenBol)
+                        .addGap(111, 111, 111))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +342,7 @@ public class VistaBoleta extends javax.swing.JFrame {
                     .addComponent(jdFecha_actual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotonAtrasB)
+                    .addComponent(BotonContableB)
                     .addComponent(BotonGenBol))
                 .addGap(28, 28, 28))
         );
@@ -452,6 +468,30 @@ public class VistaBoleta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BotonGenBolActionPerformed
 
+    private void BotonContableBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonContableBActionPerformed
+    // TODO add your handling code here:
+         try {
+         URL url = new URL("http://localhost:8081/mensaje");
+         HttpURLConnection con = (HttpURLConnection) url.openConnection();
+         con.setRequestMethod("GET");
+
+         // Detectar como Java client (esto ya lo hace por defecto)
+         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+         StringBuilder mensaje = new StringBuilder();
+         String line;
+         while ((line = in.readLine()) != null) {
+             mensaje.append(line).append("\n");
+         }
+         in.close();
+
+         JOptionPane.showMessageDialog(null, mensaje.toString().trim(), "Confirmación de Contabilidad", JOptionPane.INFORMATION_MESSAGE);
+
+     } catch (Exception ex) {
+         ex.printStackTrace();
+         JOptionPane.showMessageDialog(null, "❌ Error al contactar con el sistema contable.", "Error", JOptionPane.ERROR_MESSAGE);
+     }
+    }//GEN-LAST:event_BotonContableBActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -496,8 +536,8 @@ public class VistaBoleta extends javax.swing.JFrame {
     private javax.swing.JTextField BolPago;
     private javax.swing.JTextField BolSubtotal;
     private javax.swing.JTextField BolTotal;
-    private javax.swing.JButton BotonAtrasB;
     private javax.swing.JButton BotonCerrarB;
+    private javax.swing.JButton BotonContableB;
     private javax.swing.JButton BotonGenBol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
